@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Heaven's Park — Restaurant</title>
+  <style>
+    :root {
+      --red: #d2232a;
+      --dark: #111217;
+      --muted: #8b8f95;
+      --white: #ffffff;
+      --card: #0f1724;
+      --glass: rgba(255, 255, 255, 0.04);
+      --maxw: 1200px;
+      --radius: 12px;
+      --ease: cubic-bezier(.2, .9, .3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: #fafafa;
+      color: #111
+    }
+
+    a {
+      color: inherit
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(2, 6, 23, 0.04)
+    }
+
+    .nav {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .8rem
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 800;
+      box-shadow: 0 10px 30px rgba(210, 35, 42, 0.12)
+    }
+
+    .brand h1 {
+      font-size: 1rem;
+      margin: 0
+    }
+
+    nav {
+      display: flex;
+      gap: .2rem;
+      align-items: center
+    }
+
+    nav a {
+      padding: .6rem .9rem;
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--dark);
+      text-decoration: none;
+      transition: all 250ms var(--ease)
+    }
+
+    nav a:hover {
+      background: var(--red);
+      color: var(--white);
+      transform: translateY(-3px)
+    }
+
+
+    .menu-toggle {
+      display: none
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      padding: .5rem;
+      border-radius: 8px
+    }
+
+    .hamburger div {
+      width: 22px;
+      height: 2px;
+      background: #222;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: all 220ms var(--ease)
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      right: -100%;
+      top: 0;
+      height: 100vh;
+      width: 84%;
+      max-width: 360px;
+      background: linear-gradient(180deg, #fff, #fff);
+      box-shadow: -30px 40px 120px rgba(0, 0, 0, 0.12);
+      padding: 3rem 1.25rem;
+      transition: right 350ms var(--ease)
+    }
+
+    .menu-toggle:checked~.mobile-menu {
+      right: 0;
+    }
+
+    .menu-toggle:checked~body {
+      overflow: hidden;
+    }
+
+    .mobile-menu {
+      pointer-events: auto;
+    }
+
+    .menu-toggle:checked+label .div1 {
+      transform: translateY(6px) rotate(45deg)
+    }
+
+    .menu-toggle:checked+label .div2 {
+      opacity: 0
+    }
+
+    .menu-toggle:checked+label .div3 {
+      transform: translateY(-6px) rotate(-45deg)
+    }
+
+    .menu-toggle:checked~.mobile-menu {
+      right: 0
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 1rem;
+      border-bottom: 1px solid #f0f0f0;
+      color: var(--dark);
+      font-weight: 700
+    }
+
+
+    .cta {
+      background: var(--red);
+      color: var(--white);
+      padding: .6rem 1rem;
+      border-radius: 10px;
+      font-weight: 800;
+      box-shadow: 0 12px 40px rgba(210, 35, 42, 0.12);
+      text-decoration: none
+    }
+
+
+    .hero {
+      max-width: var(--maxw);
+      margin: 1.4rem auto;
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 1.25rem;
+      align-items: center
+    }
+
+    .hero-left h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      margin: 0 0 .6rem
+    }
+
+    .hero-left p {
+      color: var(--muted);
+      max-width: 56ch
+    }
+
+    .hero-right {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(2, 6, 23, 0.06)
+    }
+
+    .hero-banner {
+      height: 320px;
+      background-image: url('https://wallpapers.com/images/hd/biryani-1920-x-1281-background-1c1gwrx2o5e156fc.jpg');
+      background-size: cover;
+      background-position: center
+    }
+
+    .hero-card {
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.98))
+    }
+
+    .badges {
+      display: flex;
+      gap: .6rem;
+      margin-top: .6rem
+    }
+
+    .badge {
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: .45rem .6rem;
+      border-radius: 999px;
+      font-weight: 700;
+      color: var(--red)
+    }
+
+
+    section {
+      padding: 2.25rem 1rem
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem
+    }
+
+    .section-head h3 {
+      margin: 0;
+      color: var(--red)
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid #f0f0f0;
+      transition: transform 350ms var(--ease), box-shadow 350ms var(--ease)
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 28px 70px rgba(2, 6, 23, 0.06)
+    }
+
+    .card h4 {
+      margin: 0 0 .4rem
+    }
+
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem
+    }
+
+    .product {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #f0f0f0;
+      transition: transform 0.5s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 28px 70px rgba(2, 6, 23, 0.06)
+    }
+
+    .product img {
+      height: 160px;
+      object-fit: cover
+    }
+
+    .product .info {
+      padding: .8rem
+    }
+
+    .product h5 {
+      margin: 0 0 .25rem
+    }
+
+    .price {
+      color: var(--red);
+      font-weight: 800
+    }
+
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .6rem
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px
+    }
+
+
+    .reviews {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem
+    }
+
+    .review {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid #f0f0f0
+    }
+
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1rem
+    }
+
+    .contact-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid #f0f0f0
+    }
+
+    .contact-card input,
+    .contact-card textarea {
+      width: 100%;
+      padding: .6rem;
+      margin-top: .35rem;
+      border: 1px solid #ececec;
+      border-radius: 8px
+    }
+
+
+    footer {
+      background: #111;
+      color: #fff;
+      padding: 1.6rem 1rem;
+      margin-top: 1.2rem
+    }
+
+    footer .wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeUp 700ms forwards
+    }
+
+    .stagger-1 {
+      animation-delay: 120ms
+    }
+
+    .stagger-2 {
+      animation-delay: 240ms
+    }
+
+    .stagger-3 {
+      animation-delay: 360ms
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+
+    @media (max-width:1000px) {
+      .hero {
+        grid-template-columns: 1fr
+      }
+
+      .products {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      nav {
+        display: none
+      }
+
+      .hamburger {
+        display: block
+      }
+
+      .menu-toggle {
+        display: block
+      }
+
+      .mobile-menu {
+        display: block
+      }
+    }
+
+    @media (max-width:600px) {
+      .products {
+        grid-template-columns: 1fr
+      }
+
+      .cards {
+        grid-template-columns: 1fr
+      }
+
+      .gallery {
+        grid-template-columns: 1fr
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-banner {
+        height: 220px
+      }
+    }
+
+
+    .map-frame {
+      width: 100%;
+      height: 220px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 10px;
+      box-shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    
+    .map-frame:hover {
+      transform: scale(1.02);
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
+    }
+
+   
+    @media (max-width:600px) {
+      .map-frame {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo"><img src="https://heavenspark.co.in/wp-content/uploads/2024/09/HPR-Logo-150x150.png" alt="">
+        </div>
+        <div>
+          <h1 style="font-size:1rem;margin:0">Heaven's Park</h1>
+          <div style="font-size:12px;color:var(--muted)">Finger‑Lickin' Good</div>
+        </div>
+      </div>
+
+      <input id="menu-toggle" class="menu-toggle" type="checkbox" checked>
+      <label for="menu-toggle" class="hamburger" aria-hidden="true">
+        <div class="div1"></div>
+        <div class="div2"></div>
+        <div class="div3"></div>
+      </label>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contacts</a>
+        <a href="#" style="margin-top:1rem" class="cta">Order Now</a>
+      </div>
+
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contacts</a>
+      </nav>
+
+      <a href="#contact" class="cta">Order Now</a>
+
+    </div>
+  </header>
+
+  <main>
+    
+    <section id="home" class="hero fade-up stagger-1">
+      <div class="hero-left">
+        <h2>Welcome To Heaven's Park</h2>
+        <p>Authentic flavours, crispy fried goodness and home‑style biryanis. Open daily from 10:00 AM to 11:00 PM. Fast
+          delivery and fresh ingredients.</p>
+        <div style="margin-top:1rem;display:flex;gap:.8rem">
+          <a href="#menu" class="cta">See Menu</a>
+          <a href="#gallery"
+            style="padding:.6rem 1rem;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:#fff;font-weight:700;text-decoration:none">View
+            Gallery</a>
+        </div>
+
+        <div class="badges">
+          <div class="badge">Quick Delivery</div>
+          <div class="badge">Fresh Ingredients</div>
+          <div class="badge">Easy Online Order</div>
+        </div>
+      </div>
+
+      <aside class="hero-right fade-up stagger-2">
+        <div class="hero-banner"></div>
+        <div class="hero-card">
+          <strong>Chef's Special — Zafrani Biryani</strong>
+          <p class="muted" style="margin:.4rem 0 0">Aromatic basmati rice, saffron, slow‑cooked meat and signature
+            masala. Try with raita & salan.</p>
+        </div>
+      </aside>
+    </section>
+
+    
+    <section id="services" class="fade-up">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>Services</h3>
+          <div class="muted">What we offer</div>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <h4>Dine-In & Takeaway</h4>
+            <p class="muted">Comfortable seating and quick takeaway counter for people on the go.</p>
+          </div>
+          <div class="card">
+            <h4>Home Delivery</h4>
+            <p class="muted">Fast delivery across the city — hot & fresh at your door.</p>
+          </div>
+          <div class="card">
+            <h4>Catering</h4>
+            <p class="muted">Birthday parties, office lunches, small events — we cater with love.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="menu" class="fade-up">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>Menu</h3>
+          <div class="muted">Popular items</div>
+        </div>
+
+        <div class="products">
+          <div class="product">
+            <img
+              src="https://th.bing.com/th/id/R.bbaf81ada781d258478bc4d8155cf1b2?rik=L1jrZqIE4DBUKQ&riu=http%3a%2f%2fmamasecretrecipes.ca%2fwp-content%2fuploads%2f2014%2f10%2fthe-zafrani-chicken-biryani-3.jpg&ehk=uVk3xvqr1JjUdvlgB7J95nicU1EdIAghrWLT%2bsSc2m0%3d&risl=&pid=ImgRaw&r=0"
+              alt="Biryani" width="600px">
+            <div class="info">
+              <h5>Zafrani Biryani</h5>
+              <div class="muted">Aromatic basmati, tender meat, slow cooked.</div>
+              <div class="price">₹249</div>
+            </div>
+          </div>
+
+          <div class="product">
+            <img
+              src="https://th.bing.com/th/id/R.4da5d5f44944a4bb3b20352a04b61bef?rik=NaPYHC4e4Jm5KA&riu=http%3a%2f%2fdivascancook.com%2fwp-content%2fuploads%2f2015%2f01%2fIMG_0213.jpg&ehk=%2b%2fRh%2fSUr8x6B9YtDwuXfsm%2blN%2b6SoQNIOSxkUBcj%2fOo%3d&risl=&pid=ImgRaw&r=0"
+              width="600px">
+            <div class="info">
+              <h5>Crispy Fried Chicken</h5>
+              <div class="muted">Double coated, signature spice mix.</div>
+              <div class="price">₹199</div>
+            </div>
+          </div>
+
+          <div class="product">
+            <img src="https://flawlessfood.co.uk/wp-content/uploads/2020/02/blog-200225-Spicy-Chicken-Burger-14687.jpg"
+              width="600px" alt="Burger">
+            <div class="info">
+              <h5>Spicy Chicken Burger</h5>
+              <div class="muted">Juicy patty, house sauce, crisp lettuce.</div>
+              <div class="price">₹149</div>
+            </div>
+          </div>
+
+          <div class="product">
+            <img
+              src="https://whimsyandspice.com/wp-content/uploads/2022/08/20-Loaded-Fries-Recipes-Perfect-For-Sharing.jpg"
+              width="600px" alt="Fries">
+            <div class="info">
+              <h5>Fries — Loaded</h5>
+              <div class="muted">Crispy, seasoned, with cheese & herbs.</div>
+              <div class="price">₹99</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+    <section id="gallery" class="fade-up">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>Gallery</h3>
+          <div class="muted">Food & ambience</div>
+        </div>
+        <div class="gallery">
+          <img
+            src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=abcd"
+            alt="gallery1">
+          <img src="https://i.pinimg.com/originals/81/ae/4e/81ae4ee83f5c05059d7141de46fa39b7.jpg" alt="gallery2">
+          <img src="https://purendesi.in/wp-content/uploads/2023/02/Tandoori-Chicken.jpg" alt="gallery3">
+          <img
+            src="https://tse4.mm.bing.net/th/id/OIP.lt1Pj6KeaG5zKnnK7mRAUwHaE8?w=1000&h=667&rs=1&pid=ImgDetMain&o=7&rm=3"
+            alt="gallery4">
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="about" class="fade-up">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>About Us</h3>
+          <div class="muted">Our story</div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <div style="flex:1;min-width:260px">
+            <p class="muted">Heaven's Park as a small family kitchen with a passion for rich flavours. Over the
+              years we've perfected recipes for biryanis and fried favourites — served with love and fresh ingredients.
+            </p>
+          </div>
+          <div style="width:300px">
+            <div style="background:#fff;padding:1rem;border-radius:12px;border:1px solid #f0f0f0"><strong>Open
+                Hours</strong>
+              <p class="muted" style="margin:0.4rem 0 0">10:00 AM — 11:00 PM (Daily)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="reviews" class="fade-up">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>Reviews</h3>
+          <div class="muted">What customers say</div>
+        </div>
+        <div class="reviews">
+          <div class="review">
+            <strong>G.k.Viknesh</strong>
+            <p class="muted">"Best biryani in town — flavours are amazing and delivery was quick!"</p>
+          </div>
+          <div class="review">
+            <strong>Angayarkanni P.</strong>
+            <p class="muted">"Crispy chicken and friendly staff. Highly recommend for family dinners."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+    <section id="contact" class="fade-up">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>Contacts</h3>
+          <div class="muted">Reach us</div>
+        </div>
+        <div class="contact-grid">
+          <form class="contact-card" action="#" method="post">
+            <label style="font-weight:700">Name *</label>
+            <input type="text" placeholder="Your name">
+            <label style="font-weight:700;margin-top:.5rem">Phone</label>
+            <input type="tel" placeholder="+91 98765 43210">
+            <label style="font-weight:700;margin-top:.5rem">Message</label>
+            <textarea rows="4" placeholder="Your message"></textarea>
+            <div style="display:flex;justify-content:flex-end;margin-top:.6rem"><button class="cta" type="submit">Send
+                Message</button></div>
+          </form>
+
+          <aside style="display:flex;flex-direction:column;gap:1rem">
+            <div class="contact-card"><strong>Address</strong>
+              <p class="muted" style="margin:6px 0 0">No 72, Nachia Centre Building, New Natham Road, Iyer bungalow,
+                Madurai - 625014.</p>
+            </div>
+            <div class="contact-card"><strong>Email</strong>
+              <p class="muted" style="margin:6px 0 0">rm@heavenspark.co.in</p>
+            </div>
+            <div class="contact-card"><strong>Phone</strong>
+              <p class="muted" style="margin:6px 0 0">+91 9159888707
+                | +91 8531888707</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <iframe class="map-frame"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.5772695221817!2d78.13526407538934!3d9.96908499013477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c77d014c6cb7%3A0x8143414004d529cb!2sHeaven&#39;s%20park%20Arabian%20Multi%20Cuisine%20Restaurant%20Madurai!5e0!3m2!1sen!2sin!4v1762259989392!5m2!1sen!2sin"
+    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  <footer>
+    <div class="wrap">
+      <div>Copyright © Heavenspark. All Rights Reserve</div>
+    </div>
+  </footer>
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const links = document.querySelectorAll('.mobile-menu a');
+
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.checked = false; 
+      });
+    });
+  </script>
+</body>
+
+</html>
