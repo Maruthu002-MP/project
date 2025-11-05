@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: rgb(238, 214, 183);
+        }
+
+        .red-slide {
+            background-color: red;
+            display: flex;
+            justify-content: center;
+        }
+
+        .red-slide .head {
+            font-size: 20px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .head span {
+            color: yellow;
+        }
+
+        .main {
+            background-color: rgb(229, 219, 207);
+            display: flex;
+            justify-content: space-around;
+            height: 120px;
+            border-bottom: 3px solid #eabe2c;
+        }
+
+        .h1 {
+            margin-top: 40px;
+            color: red;
+            margin-right: 10%;
+        }
+
+        .icon i {
+            margin-top: 45px;
+            color: red;
+            margin-left: 25px;
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                flex-direction: row;
+                justify-content: space-between;
+                height: 120px;
+                padding: 5px 15px;
+            }
+
+            .h1 {
+                display: none;
+                /* h1 text hide panniruken */
+            }
+
+            .icon i {
+                font-size: 18px;
+                margin-left: 10px;
+                margin-top: 40px;
+            }
+        }
+
+        .background {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            color: #fff;
+        }
+
+
+        .background img.bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.3s ease-in-out;
+            z-index: 0;
+        }
+
+        .background img.bg.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .letter {
+            transition: opacity 0.8s ease-in-out;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .letter.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+            margin-left: 3%;
+            padding: 9rem;
+        }
+
+
+        .h2 {
+            font-size: 4.1rem;
+            line-height: 1.02;
+            margin-bottom: .6rem;
+            font-weight: 800;
+            text-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-wrap: nowrap;
+        }
+
+        .para {
+            font-size: 30px;
+            color: rgba(255, 255, 255, 0.92);
+            margin-bottom: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .h2 {
+                font-size: 4.1rem;
+                line-height: 1.02;
+                margin-bottom: .6rem;
+                font-weight: 800;
+                text-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+                color: #fff;
+                text-wrap: wrap;
+            }
+
+            .para {
+                font-size: 30px;
+                color: rgba(255, 255, 255, 0.92);
+                margin-bottom: 1.2rem;
+            }
+        }
+
+        .sweet {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        h3 {
+            font-size: 50px;
+
+        }
+
+        @media (max-width: 768px) {
+            h3 {
+                font-size: 30px;
+            }
+
+            .line {
+                width: 50px;
+            }
+        }
+
+        .boxcontainer {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            margin-top: 20px;
+            margin-left: 3%;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            height: 450px;
+            width: 500px;
+            background-color: white;
+            border-radius: 20px;
+        }
+
+        .contents {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .classic {
+            text-wrap: wrap;
+            padding-left: 10px;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+
+        .strike {
+            color: red;
+            font-size: 20px;
+        }
+
+        .span {
+            font-size: 25px;
+            color: black;
+            font-weight: bold;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .names {
+            font-size: 25px;
+            padding-left: 10px;
+            line-height: 1.8;
+            padding-top: 20px;
+        }
+
+        .buttons {
+            padding: 10px 30px;
+            margin-left: 10px;
+            margin-top: 8px;
+            background-color: none;
+            border-radius: 10px;
+            border: 2px solid#eabe2c;
+            color: #eabe2c;
+        }
+
+        .button {
+            padding: 12px 30px;
+            margin-left: 10px;
+            margin-top: 8px;
+            background-color: brown;
+            border: none;
+            color: #fff;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .box {
+                height: 450px;
+                width: 350px;
+                background-color: white;
+                border-radius: 20px;
+            }
+
+            .contents {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .classic {
+                text-wrap: wrap;
+                padding-left: 10px;
+                font-size: 18px;
+                line-height: 1.2;
+            }
+
+            .strike {
+                color: red;
+                font-size: 20px;
+            }
+
+            .span {
+                font-size: 25px;
+                color: black;
+                font-weight: bold;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .names {
+                font-size: 20px;
+                padding-left: 10px;
+                line-height: 1.8;
+                padding-top: 5px;
+            }
+
+            .buttons {
+                padding: 10px 30px;
+                margin-left: 10px;
+                margin-top: 8px;
+                background-color: none;
+                border-radius: 10px;
+                border: 2px solid#eabe2c;
+                color: #eabe2c;
+            }
+
+            .button {
+                padding: 12px 30px;
+                margin-left: 10px;
+                margin-top: 8px;
+                background-color: brown;
+                border: none;
+                color: #fff;
+                border-radius: 10px;
+            }
+
+            .photos img {
+                width: 330px;
+            }
+        }
+
+        .kolam {
+            background-color: white;
+            margin-top: 30px;
+            margin-left: 30px;
+            margin-right: 30px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .rangolis {
+            height: 400px;
+            width: 650px;
+            padding: 5px 20px 23px 2px;
+        }
+
+        .rangolis2 {
+            margin-left: 60px;
+        }
+
+        .h4 {
+            font-size: 20px;
+            text-align: center;
+            padding-bottom: 30px;
+            padding-top: 30px;
+        }
+
+        input {
+            padding: 20px 60px;
+            margin-left: 30px;
+            border-radius: 10px;
+            border: none;
+            font-size: 18px;
+            box-shadow: 0px 0px 5px hsla(0, 0%, 0%, 0.249);
+        }
+
+        .boxes {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .btn {
+            padding: 15px 100px;
+            background-color: brown;
+            color: white;
+            font-size: 18px;
+            margin-left: 30px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .kolam {
+                background-color: white;
+                height: 850px;
+                margin-top: 30px;
+                margin-left: 20px;
+                margin-right: 40px;
+                display: flex;
+                flex-direction: column;
+                border-radius: 20px;
+                box-shadow: 0px 0px 5px hsla(0, 0%, 0%, 0.249);
+            }
+
+            .rangolis {
+                height: 400px;
+                width: 350px;
+                padding: 5px 20px 23px 2px;border-radius: 20px;
+            }
+
+            .rangolis2 {
+                margin-left: 60px;
+            }
+
+            .h4 {
+                font-size: 20px;
+                text-align: center;
+                padding-bottom: 30px;
+
+            }
+
+            input {
+                padding: 20px 40px;
+                margin-left: 20px;
+                border-radius: 10px;
+                border: none;
+                font-size: 18px;
+                margin-bottom: 10px;
+               box-shadow: 0px 0px 5px hsla(0, 0%, 0%, 0.249);
+               
+            }
+
+            .inputbox {
+                margin-top: -20px;
+            }
+
+            .boxes {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .btn {
+                padding: 15px 50px;
+                margin-right: 20px;
+                background-color: brown;
+                color: white;
+                font-size: 18px;
+                margin-left: 30px;
+                border-radius: 10px;
+                border: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="firstpage">
+            <div class="red-slide">
+                <p class="head">Flat 15% OFF on ALL Products <span>Order Now</span></p>
+            </div>
+            <div class="yello-slide">
+                <div class="main">
+                    <h1 class="h1">PALAKARA PETTI</h1>
+                    <img src="https://palakarapetti.in/images/logo.png" height="200px" width="200px"
+                        style="margin-right: 20%; margin-top: -40px;" alt="">
+                    <p class="icon"><i class="fa-solid fa-magnifying-glass"></i><i
+                            class="fa-solid fa-cart-shopping"></i></p>
+                </div>
+            </div>
+            <div class="background">
+                <img src="https://palakarapetti.in/images/sweets-2.jpg" class="bg active" alt="">
+                <img src="https://palakarapetti.in/images/sweets-1.jpg" class="bg" alt="">
+                <img src="https://palakarapetti.in/images/sweet-4.png" class="bg" alt="">
+
+                <div class="content">
+                    <div class="letter active">
+                        <h2 class="h2">Taste the Tradition</h2>
+                        <p class="para"> Experience authentic South Indian snacks and sweets, crafted with love
+                            and3heritage in every bite.</p>
+                    </div>
+                    <div class="letter">
+                        <h2 class="h2">Fresh, Crispy, Delightful</h2>
+                        <p class="para">From murukku to laddus, enjoy snacks that are perfectly crunchy and irresistibly
+                            flavorful.Traditional sweets, handcrafted and fresh.</p>
+                    </div>
+                    <div class="letter">
+                        <h2 class="h2"> Celebrate Every Moment</h2>
+                        <p class="para"> Whether it's festivals, family gatherings, or daily treats,Palagaara Petti adds
+                            joy to every occasion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="secondpage">
+            <div class="sweet">
+                <img class="line" src="https://www.pngall.com/wp-content/uploads/13/Line-PNG-Image.png" height="10px"
+                    width="600px" style="margin-top: 20px;" alt="">
+                <h3>Sweets and Savouries</h3>
+                <img class="line" src="https://www.pngall.com/wp-content/uploads/13/Line-PNG-Image.png" height="10px"
+                    width="600px" style="margin-top: 20px;" alt="">
+            </div>
+
+            <div class="boxcontainer">
+                <div class="box">
+                    <div class="photos">
+                        <img src="https://palakarapetti.in/images/combo-1.png" height="250px" width="480px"
+                            style="margin-left: 10px; margin-top: 10px;border-radius: 20px; @media (max-width: 768px){height: 200;width: 400;}"
+                            alt="">
+                    </div>
+                    <h3 class="names">Sweet Heritage Box</h3>
+                    <div class="contents">
+                        <p class="classic">A golden box of Tamil Nadu’s classic sweets - rich, festive, and full of
+                            tradition.</p>
+                        <p class="strike"><strike>₹500</strike><span class="span">₹425</span></p>
+                    </div>
+                    <button class="button">ADD TO CART</button><button class="buttons">Buy Now</button>
+                </div>
+
+                <div class="box">
+                    <div class="photos">
+                        <img src="https://palakarapetti.in/images/combo-2.png" height="250px" width="480px"
+                            style="margin-left: 10px; margin-top: 10px;border-radius: 20px;" alt="">
+                    </div>
+                    <h3 class="names">Crisp Delight Box</h3>
+                    <div class="contents">
+                        <p class="classic">A crunchy mix of South Indian savouries packed with authentic flavor.</p>
+                        <p class="strike"><strike>₹500</strike><span class="span">₹425</span></p>
+                    </div>
+                    <button class="button">ADD TO CART</button><button class="buttons">Buy Now</button>
+                </div>
+                <div class="box">
+                    <div class="photos">
+                        <img src="https://palakarapetti.in/images/combo-3.png" height="250px" width="480px"
+                            style="margin-left: 10px; margin-top: 10px;border-radius: 20px;" alt="">
+                    </div>
+                    <h3 class="names">Classic Sweet Essence</h3>
+                    <div class="contents">
+                        <p class="classic">An elegant golden box of traditional sweets made with pure love.</p>
+                        <p class="strike"><strike>₹500</strike><span class="span">₹425</span></p>
+                    </div>
+                    <button class="button">ADD TO CART</button><button class="buttons">Buy Now</button>
+                </div>
+                <div class="box">
+                    <div class="photos">
+                        <img src="https://palakarapetti.in/images/combo-4.png" height="250px" width="480px"
+                            style="margin-left: 10px; margin-top: 10px;border-radius: 20px;" alt="">
+                    </div>
+                    <h3 class="names">Traditional Crunch Box</h3>
+                    <div class="contents">
+                        <p class="classic">Freshly prepared Tamil savouries offering the perfect festive crunch.</p>
+                        <p class="strike"><strike>₹500</strike><span class="span">₹425</span></p>
+                    </div>
+                    <button class="button">ADD TO CART</button><button class="buttons">Buy Now</button>
+                </div>
+                <div class="box">
+                    <div class="photos">
+                        <img src="https://palakarapetti.in/images/laddu.png" height="250px" width="480px"
+                            style="margin-left: 10px; margin-top: 10px;border-radius: 20px;" alt="">
+                    </div>
+                    <h3 class="names">Laddu – Golden Bliss</h3>
+                    <div class="contents">
+                        <p class="classic">Soft, rich, and melt-in-mouth sweetness made the traditional way.</p>
+                        <p class="strike"><strike>₹500</strike><span class="span">₹425</span></p>
+                    </div>
+                    <button class="button">ADD TO CART</button><button class="buttons">Buy Now</button>
+                </div>
+                <div class="box">
+                    <div class="photos">
+                        <img src="https://palakarapetti.in/images/combo-1.png" height="250px" width="480px"
+                            style="margin-left: 10px; margin-top: 10px;border-radius: 20px;" alt="">
+                    </div>
+                    <h3 class="names">Sweet Heritage Box</h3>
+                    <div class="contents">
+                        <p class="classic">A golden box of Tamil Nadu’s classic sweets - rich, festive, and full of
+                            tradition.</p>
+                        <p class="strike"><strike>₹500</strike><span class="span">₹425</span></p>
+                    </div>
+                    <button class="button">ADD TO CART</button><button class="buttons">Buy Now</button>
+                </div>
+                <div class="box">
+                    <div class="photos">
+                        <img src="https://palakarapetti.in/images/combo-3.png" height="250px" width="480px"
+                            style="margin-left: 10px; margin-top: 10px;border-radius: 20px;" alt="">
+                    </div>
+                    <h3 class="names">Classic Sweet Essence</h3>
+                    <div class="contents">
+                        <p class="classic">An elegant golden box of traditional sweets made with pure love.</p>
+                        <p class="strike"><strike>₹500</strike><span class="span">₹425</span></p>
+                    </div>
+                    <button class="button">ADD TO CART</button><button class="buttons">Buy Now</button>
+                </div>
+            </div>
+            <div class="kolam">
+                <div class="rangoli">
+                    <img class="rangolis" src="https://palakarapetti.in/images/kolam-3.png" alt="">
+
+                </div>
+                <div class="rangoli2">
+                    <h4 class="h4">Contact Us For Bulk Orders</h4>
+                    <div class="boxes">
+                        <div class="inputbox">
+                            <input type="text" placeholder="Subject">
+                            <input type="text" placeholder="Mobile Number">
+                        </div>
+                        <div class="inputbox">
+                            <input type="text" placeholder="Subject">
+                            <input type="text" placeholder="Mobile Number">
+                        </div>
+                        <button class="btn">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const images = document.querySelectorAll('.background img.bg');
+        const letters = document.querySelectorAll('.letter');
+        let index = 0;
+
+        setInterval(() => {
+            images[index].classList.remove('active');
+            letters[index].classList.remove('active');
+            index = (index + 1) % images.length;
+            index = (index + 1) % letters.length;
+            images[index].classList.add('active');
+            letters[index].classList.add('active');
+        }, 3000);
+    </script>
+</body>
+
+</html>
